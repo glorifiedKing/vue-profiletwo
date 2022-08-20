@@ -4,7 +4,7 @@
     <div class="section">
       <div class="flex-row">
         <label class="label" for="filter">Find profile:</label>
-        <input class="input">
+        <input class="input" id="filter" v-model="filter">
       </div>
       <div class="buttons">
         <button @click="sortAsc">▲</button>
@@ -12,7 +12,7 @@
       </div>
 
       <ProfileCard
-        v-for="(profile, index) in profiles"
+        v-for="(profile, index) in filteredProfiles"
         :key="index"
         :profile="profile"
         class="profile"
@@ -33,7 +33,7 @@
         <input class="input">
       </div>
       <div class="flex-row">
-        <label class="label" for="filter">Email:</label>
+        <label class="label">Email:</label>
         <input class="input">
       </div>
       <div class="flex-row">
@@ -79,7 +79,8 @@ export default {
           description: "Surgeon",
           likes: 53
         }
-      ]
+      ],
+        filter: ''
     };
   },
 
@@ -99,7 +100,16 @@ export default {
           const itemIndex = this.profiles.findIndex((t) => t.id === prof.id);
           this.profiles[itemIndex].comment = com;
       }
-  }
+  },
+    computed: {
+      filteredProfiles() {
+          if (this.filter === '') {
+              return this.profiles;
+          }
+
+          return this.profiles.filter((t) => t.name.toLowerCase().includes(this.filter.toLowerCase()));
+      }
+    }
 };
 </script>
 
