@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="comment">
-      <input class="comment-input" placeholder="Write your comment...">
+      <input class="comment-input" placeholder="Write your comment..."  v-model="user_comment" @input="onChange">
     </div>
   </div>
 </template>
@@ -37,7 +37,21 @@ export default {
       type: Object,
       required: true
     }
-  }
+  },
+    data() {
+        return {
+            user_comment: this.profile.comment
+        }
+    },
+    emits: ['comment'],
+    methods: {
+        onChange(){
+            this.$emit('comment', this.user_comment)
+        }
+    },
+    updated() {
+        this.user_comment = this.profile.comment;
+    }
 };
 </script>
 

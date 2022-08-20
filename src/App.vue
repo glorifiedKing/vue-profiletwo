@@ -16,6 +16,7 @@
         :key="index"
         :profile="profile"
         class="profile"
+        @comment="commentChanged(profile, $event)"
       />
 
       <div class="icons-note">
@@ -93,7 +94,11 @@ export default {
       this.profiles.sort(function(a, b) {
         return b.likes - a.likes;
       });
-    }
+    },
+      commentChanged(prof, com) {
+          const itemIndex = this.profiles.findIndex((t) => t.id === prof.id);
+          this.profiles[itemIndex].comment = com;
+      }
   }
 };
 </script>
