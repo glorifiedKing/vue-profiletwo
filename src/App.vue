@@ -30,17 +30,17 @@
       <p class="header">Add new profile:</p>
       <div class="flex-row">
         <label class="label">Name:</label>
-        <input class="input">
+        <input class="input" type="text" v-model="newProfile.name">
       </div>
       <div class="flex-row">
         <label class="label">Email:</label>
-        <input class="input">
+        <input class="input" type="email" v-model="newProfile.email">
       </div>
       <div class="flex-row">
         <label class="label">Specialisation:</label>
-        <input class="input">
+        <input class="input" type="text" v-model="newProfile.description">
       </div>
-      <button>Add</button>
+      <button @click="addProfile">Add</button>
     </div>
   </div>
 </template>
@@ -56,49 +56,61 @@ export default {
   },
 
   data() {
-    return {
-      profiles: [
-        {
-          id: 1,
-          name: "Wojciech",
-          email: "wojciech@poz.pl",
-          description: "Anaesthesiologist",
-          likes: 34
-        },
-        {
-          id: 2,
-          name: "Maria",
-          email: "maria@poz.pl",
-          description: "Radiologist",
-          likes: 28
-        },
-        {
-          id: 3,
-          name: "Anna",
-          email: "anna@poz.pl",
-          description: "Surgeon",
-          likes: 53
-        }
-      ],
-        filter: ''
-    };
+      return {
+          profiles: [
+              {
+                  id: 1,
+                  name: "Wojciech",
+                  email: "wojciech@poz.pl",
+                  description: "Anaesthesiologist",
+                  likes: 34
+              },
+              {
+                  id: 2,
+                  name: "Maria",
+                  email: "maria@poz.pl",
+                  description: "Radiologist",
+                  likes: 28
+              },
+              {
+                  id: 3,
+                  name: "Anna",
+                  email: "anna@poz.pl",
+                  description: "Surgeon",
+                  likes: 53
+              }
+          ],
+          filter: '',
+          newProfile: {
+              id: '',
+              name: '',
+              email: '',
+              description: '',
+              likes: 0,
+              comment: ''
+          }
+      };
   },
 
   methods: {
-    sortAsc() {
-      this.profiles.sort(function(a, b) {
-        return a.likes - b.likes;
-      });
-    },
+      sortAsc() {
+          this.profiles.sort(function (a, b) {
+              return a.likes - b.likes;
+          });
+      },
 
-    sortDesc() {
-      this.profiles.sort(function(a, b) {
-        return b.likes - a.likes;
-      });
-    },
+      sortDesc() {
+          this.profiles.sort(function (a, b) {
+              return b.likes - a.likes;
+          });
+      },
       commentChanged(prof, com) {
           const itemIndex = this.profiles.findIndex((t) => t.id === prof.id);
           this.profiles[itemIndex].comment = com;
+      },
+      addProfile() {
+          this.newProfile.id = this.profiles.length+2;
+          this.profiles.push(this.newProfile);
       }
   },
     computed: {
