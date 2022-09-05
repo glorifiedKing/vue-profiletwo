@@ -93,6 +93,11 @@ export default {
       this.profiles.sort(function(a, b) {
         return b.likes - a.likes;
       });
+    },
+
+    //lets add a method to add new profiles
+    addProfile(newProfile){
+      this.profiles = [...this.profiles,newProfile] //here we do some distructuring
     }
   }
 };
