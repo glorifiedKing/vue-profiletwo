@@ -11,12 +11,6 @@
         <button @click="sortDesc">▼</button>
       </div>
 
-      <div>
-    <AddProfile v-on:add-profile="addProfile"/>
-    <Profiles v-bind:profiles="profiles" v-on:del-profile="deleteProfile"/>
-    </div>
-
-
       <ProfileCard
         v-for="profile in profiles"
         :key="profile.id"
@@ -112,11 +106,14 @@ export default {
         description: this.description,
         likes: 0
       }
-    },
-  //lets add a method to delete a profiles
-  deleteProfile(id){
-    this.profiles = this.profiles.filter((profile) => profile.id !== id)
-  }
+      // Send up to parent
+      this.$emit('add-profile', newProfile);
+
+      this.name = '';
+      this.email = '';
+      this.description = '';
+      this.likes = 0;
+    }
   }
 };
 </script>
