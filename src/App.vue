@@ -104,8 +104,14 @@ export default {
     },
 
     //lets add a method to add new profiles
-    addProfile(newProfile){
-      this.profiles = [...this.profiles,newProfile] //here we do some distructuring
+    addProfile(e){
+      e.preventDefault()
+      const newProfile = {
+        id:Date.now(),
+        name: this.name,
+        description: this.description,
+        likes: 0
+      }
     },
   //lets add a method to delete a profiles
   deleteProfile(id){
