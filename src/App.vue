@@ -36,15 +36,15 @@
       <form @submit="addProfile">
       <div class="flex-row">
         <label class="label">Name:</label>
-        <input class="input">
+        <input required type="text" v-model="name" placeholder="enter name" class="form-control">
       </div>
       <div class="flex-row">
         <label class="label" for="filter">Email:</label>
-        <input class="input">
+        <input required type="email" v-model="email" placeholder="enter email" class="form-control">
       </div>
       <div class="flex-row">
         <label class="label">Specialisation:</label>
-        <input class="input">
+        <input required type="text" v-model="description" placeholder="enter description" class="form-control">
       </div>
       <button>Add</button>
     </form>
