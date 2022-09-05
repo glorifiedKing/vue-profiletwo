@@ -98,7 +98,11 @@ export default {
     //lets add a method to add new profiles
     addProfile(newProfile){
       this.profiles = [...this.profiles,newProfile] //here we do some distructuring
-    }
+    },
+  //lets add a method to delete a profiles
+  deleteProfile(id){
+    this.profiles = this.profiles.filter((profile) => profile.id !== id)
+  }
   }
 };
 </script>
