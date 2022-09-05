@@ -11,6 +11,12 @@
         <button @click="sortDesc">▼</button>
       </div>
 
+      <div>
+    <AddProfile v-on:add-profile="addProfile"/>
+    <Profiles v-bind:profiles="profiles" v-on:del-profile="deleteProfile"/>
+    </div>
+
+
       <ProfileCard
         v-for="profile in profiles"
         :key="profile.id"
@@ -27,6 +33,7 @@
 
     <div class="section">
       <p class="header">Add new profile:</p>
+      <form @submit="addProfile">
       <div class="flex-row">
         <label class="label">Name:</label>
         <input class="input">
@@ -40,6 +47,7 @@
         <input class="input">
       </div>
       <button>Add</button>
+    </form>
     </div>
   </div>
 </template>
