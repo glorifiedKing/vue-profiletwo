@@ -4,7 +4,9 @@
     <div class="section">
       <div class="flex-row">
         <label class="label" for="filter">Find profile:</label>
-        <input class="input">
+        <input type= "text" v-model="search" class="input">
+        <p>search term - {{search}}</p>
+        <div v-for="profile in matchedProfile" :key="profile.name">{{profile.name}}</div>
       </div>
       <div class="buttons">
         <button @click="sortAsc">▲</button>
@@ -48,15 +50,54 @@
 
 <script>
 import ProfileCard from "./components/ProfileCard";
+import Profiles from "./components/Profiles";
+import {computed,ref,watch} from 'vue';
 
 export default {
   name: "App",
 
   components: {
-    ProfileCard
+    ProfileCard,
+    Profiles
   },
 
+  setup(){
+const search = ref('')
+const profiles = ref([
+        {
+          id: 1,
+          name: "Wojciech",
+          email: "wojciech@poz.pl",
+          description: "Anaesthesiologist",
+          likes: 34
+        },
+        {
+          id: 2,
+          name: "Maria",
+          email: "maria@poz.pl",
+          description: "Radiologist",
+          likes: 28
+        },
+        {
+          id: 3,
+          name: "Anna",
+          email: "anna@poz.pl",
+          description: "Surgeon",
+          likes: 53
+        }
+      ])
+
+      watch(search, () =>{
+        const matchedProfile = computed(()=>{
+  
+  return profiles.value.filter((name) => name.includes(search.value))
+})
+return {search,matchedProfile}
+      })
+  }
+,
   data() {
+    const search = ref('')
     return {
       profiles: [
         {
@@ -113,6 +154,10 @@ export default {
       this.email = '';
       this.description = '';
       this.likes = 0;
+    },
+    //delete profile
+    deleteProfile(id){
+      this.profiles = this.profiles.filter((profile) => profile.id !== id)
     }
   }
 };
