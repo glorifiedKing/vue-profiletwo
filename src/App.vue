@@ -97,7 +97,6 @@ return {search,matchedProfile}
   }
 ,
   data() {
-    const search = ref('')
     return {
       profiles: [
         {
