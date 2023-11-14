@@ -4,7 +4,7 @@
     <div class="section">
       <div class="flex-row">
         <label class="label" for="filter">Find profile:</label>
-        <input class="input">
+        <input class="input" v-model="searchKey">
       </div>
       <div class="buttons">
         <button @click="sortAsc">▲</button>
@@ -12,7 +12,7 @@
       </div>
 
       <ProfileCard
-        v-for="(profile, index) in profiles"
+        v-for="(profile, index) of filteredProfiles"
         :key="index"
         :profile="profile"
         class="profile"
@@ -25,37 +25,26 @@
       </div>
     </div>
 
-    <div class="section">
-      <p class="header">Add new profile:</p>
-      <div class="flex-row">
-        <label class="label">Name:</label>
-        <input class="input">
-      </div>
-      <div class="flex-row">
-        <label class="label" for="filter">Email:</label>
-        <input class="input">
-      </div>
-      <div class="flex-row">
-        <label class="label">Specialisation:</label>
-        <input class="input">
-      </div>
-      <button>Add</button>
-    </div>
+    <NewProfile v-on:new-profile="addNewProfile"/>
+   
   </div>
 </template>
 
 <script>
 import ProfileCard from "./components/ProfileCard";
+import NewProfile from "./components/NewProfile";
 
 export default {
   name: "App",
 
   components: {
-    ProfileCard
+    ProfileCard,
+    NewProfile,
   },
 
   data() {
     return {
+      searchKey: '',
       profiles: [
         {
           id: 1,
@@ -93,6 +82,18 @@ export default {
       this.profiles.sort(function(a, b) {
         return b.likes - a.likes;
       });
+    },
+    addNewProfile(e){
+      this.profiles = [...this.profiles, {...e,description: e.specialization , likes: 0 }]
+    },
+    
+  },
+  computed : {
+    filteredProfiles(){
+      if(this.searchKey)
+        return this.profiles.filter(profile => profile.name.startsWith(this.searchKey))
+      else return this.profiles
+
     }
   }
 };
