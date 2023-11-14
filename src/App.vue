@@ -4,7 +4,7 @@
     <div class="section">
       <div class="flex-row">
         <label class="label" for="filter">Find profile:</label>
-        <input class="input">
+        <input class="input" v-model="searchKey">
       </div>
       <div class="buttons">
         <button @click="sortAsc">▲</button>
@@ -12,7 +12,7 @@
       </div>
 
       <ProfileCard
-        v-for="(profile, index) in profiles"
+        v-for="(profile, index) of filteredProfiles"
         :key="index"
         :profile="profile"
         class="profile"
@@ -44,6 +44,7 @@ export default {
 
   data() {
     return {
+      searchKey: '',
       profiles: [
         {
           id: 1,
@@ -85,6 +86,15 @@ export default {
     addNewProfile(e){
       this.profiles = [...this.profiles, {...e,description: e.specialization , likes: 0 }]
     },
+    
+  },
+  computed : {
+    filteredProfiles(){
+      if(this.searchKey)
+        return this.profiles.filter(profile => profile.name.startsWith(this.searchKey))
+      else return this.profiles
+
+    }
   }
 };
 </script>
